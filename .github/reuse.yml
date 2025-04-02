@@ -1,0 +1,20 @@
+name: Reuse other workflow
+on:
+  workflow_call:
+    inputs:
+      who-to-greet:
+        description: "The name of the person to greet"
+        required: true
+        type: string
+        default: "World"
+jobs:
+  reusable-job:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      who-to-greet: ${{ inputs.who-to-greet }}
+  use-output:
+    runs-on: ubuntu-latest
+    needs: reusable-job
+    steps:
+      - name: Say Hello
+        run: echo "Greeting time: ${{ needs.reusable-job.outputs.current-time }}"
