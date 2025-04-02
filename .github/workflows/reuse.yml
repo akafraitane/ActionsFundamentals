@@ -1,6 +1,6 @@
 name: Reuse other workflow
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       who-to-greet:
         description: "The name of the person to greet"
@@ -17,4 +17,5 @@ jobs:
     needs: reusable-job
     steps:
       - name: Say Hello
-        run: echo "Greeting time: ${{ needs.reusable-job.outputs.current-time }}"
+        run: |
+          echo "Greeting time: ${{ needs.reusable-job.outputs.current-time }}"
